@@ -1,27 +1,37 @@
-// MarylandBenefits.org theme — mirrors the existing site's visual design
+// MarylandBenefits.org theme — mirrors the legacy site's visual design
 // (the Honeycrisp "black + #f5f5f5" reskin captured in the content snapshot).
 //
-// Token overrides first, then the small set of component rules the tokens
-// cannot express: the black header bar, the white application card, the
-// black primary button, and the footer's two-column arrangement.
-// Tokens load last in the bundle (see design-system-bundle.scss).
+// The legacy site renders at a 10px root font size, so its rem values map to
+// small pixel sizes; the pixel values below are measured from the reference
+// pages directly. Token overrides first, then the component rules the tokens
+// cannot express. Tokens load last in the bundle (see design-system-bundle.scss).
 
 :root {
   --color-bg: #f5f5f5;
   --body-background: #f5f5f5;
   --body-background-alt: #fff;
   --color-card-bg: #fff;
-  --color-text: #121111;
+  --color-text: #000;
   --color-text-muted: #5f5854;
   --color-link: #003865;
   --color-link-hover: #00223d;
+  --link-decoration: underline;
   --color-tint: #e9f6ff;
   --color-dark-bg: #000;
   --color-dark-bg-alt: #1a1a1a;
   --shadow-md: 0 3px 5px rgb(0 0 0 / 15%);
-  --border-radius: 1rem;
+  --border-radius: 10px;
+  --font-family-body: arial, sans-serif;
+  --font-family-heading: arial, sans-serif;
 }
 
+// The legacy site's body copy: 19px/25px black with 25px paragraph gaps.
+@mixin legacy-body-copy {
+  margin-bottom: 25px;
+  font-size: 19px;
+  line-height: 25px;
+  color: var(--color-text);
+}
 // Header: full-width black bar with the MarylandBenefits.org wordmark.
 // The template's nav bar carries no background of its own, so the bar is
 // this theme's addition; with no navigation pages it holds only the logo.
@@ -31,8 +41,8 @@
   gap: 1rem;
   align-items: center;
 
-  min-height: 7rem;
-  padding-inline: clamp(1.5rem, 5vw, 3.5rem);
+  min-height: 70px;
+  padding-inline: 15px;
 
   background: var(--color-dark-bg);
   box-shadow: none;
@@ -45,57 +55,101 @@
       max-width: min(18rem, 100%);
     }
   }
+
+  @media (width >= 37.5rem) {
+    padding-inline: 35px;
+  }
 }
 
-// The application card: white, rounded, softly shadowed, centered.
+// Shared hero text: left-aligned, 19px/25px body copy, snapshotted margins.
+// The hero container matches the legacy 960px content column.
 .design-system .hero {
-  width: min(100%, 55rem);
-  margin-block: var(--section-padding-y);
+  display: flex;
+  flex-direction: column;
+  gap: 35px;
+
+  width: min(100%, 60rem);
   margin-inline: auto;
-  padding: 6rem 3.5rem;
+  padding: 60px 15px;
+
+  .prose {
+    gap: 25px;
+    align-items: flex-start;
+    max-width: none;
+
+    p {
+      @include legacy-body-copy;
+    }
+  }
+
+
+  h1 {
+    margin-top: 10px;
+    margin-bottom: 25px;
+    font-size: 50px;
+  }
+
+  @media (width >= 37.5rem) {
+    padding: 60px 35px;
+  }
+}
+
+.design-system .hero .actions {
+  align-self: stretch;
+  justify-content: flex-start;
+}
+
+.hero-emblem {
+  margin-inline: 0;
+}
+
+// The landing page's application card: white, rounded, softly shadowed,
+// 550px wide, centered on the grey body.
+.design-system.page--home .hero {
+  width: min(100% - 30px, 34.375rem);
+  margin-block: 35px 15px;
+  padding: 60px 25px;
   border-radius: var(--border-radius);
 
   background: var(--color-card-bg);
   box-shadow: 0 3px 5px rgb(0 0 0 / 15%);
 
-  @media (width <= 40rem) {
-    padding: 2.5rem 1.5rem;
+  h1 {
+    margin-top: 0;
+    font-size: 27px;
+    line-height: 35px;
+  }
+
+  @media (width >= 37.5rem) {
+    padding: 60px 35px;
   }
 }
 
-.hero-emblem {
-  margin-inline: auto;
-}
 
-// The snapshot's landing card uses a much smaller opening heading than the
-// template default; the privacy page keeps the template hero scale, which
-// matches its snapshot's 50px title.
-.design-system.page--home .hero h1 {
-  font-size: 1.7rem;
-}
+// Primary action: the legacy button scale — 19px bold, generous padding,
+// 10px radius, and the darker shadow edge under it.
+.design-system .btn--primary {
+  padding: 17.5px 25px;
+  border-radius: 10px;
 
-// Primary action: black button with the snapshot's short radius and the
-// darker shadow edge under it.
-.design-system .btn {
-  border-radius: 5px;
+  font-size: 19px;
+  font-weight: 700;
 
-  &--primary {
-    background: #000;
+  background: #000;
+  box-shadow: 0 2px 0 #333;
+
+  &:hover:not(:disabled) {
+    background: #333;
     box-shadow: 0 2px 0 #333;
-
-    &:hover:not(:disabled) {
-      background: #333;
-      box-shadow: 0 2px 0 #333;
-    }
   }
 }
 
 // Footer: dark bar, service text and privacy link in a left column, the
 // Code for America wordmark on the right, like the snapshot's footer grid.
 // The <footer> element stays full-width; footer.html wraps the snippet in
-// .footer-content, which centers at the card width.
+// .footer-content, which centers at the content width.
 .design-system footer {
-  padding-inline: clamp(1.5rem, 5vw, 3.5rem);
+  padding: 38px 15px;
 
   a:not(.btn) {
     color: #fff;
@@ -104,17 +158,29 @@
   .footer-content {
     display: grid;
     grid-template-columns: 1fr auto;
-    gap: var(--space-sm) var(--space-xl);
+    gap: 10px 60px;
     align-items: center;
 
-    width: min(100%, 55rem);
+    width: min(100%, 60rem);
     margin-inline: auto;
 
-    text-align: left;
+    text-align: start;
 
     p {
       grid-column: 1;
+
+      max-width: 29.375rem;
       margin: 0;
+
+      font-size: 19px;
+      line-height: 25px;
+      color: #fff;
+    }
+
+    // The privacy link renders smaller, like the snapshot's text--small.
+    a:not(:has(img)) {
+      justify-self: start;
+      font-size: 15px;
     }
 
     .footer-logo {
@@ -124,11 +190,11 @@
     }
 
     img {
-      width: 6.25rem;
+      width: 100px;
     }
 
     // On narrow screens the logo stacks under the text column.
-    @media (width <= 40rem) {
+    @media (width <= 25rem) {
       grid-template-columns: 1fr;
       justify-items: start;
 
@@ -138,17 +204,82 @@
       }
     }
   }
+
+  @media (width >= 37.5rem) {
+    padding: 38px 35px;
+  }
 }
 
-// Long-form pages: contents column takes a third, content the rest, from
-// the md breakpoint up; below it the template's own stacking applies.
+// Long-form pages: white slab holding the contents column (a third) and
+// the content column (the rest), inside the legacy 960px container. The
+// container's inline padding drops to zero once it centers, matching the
+// legacy grid's edge alignment.
+.design-system .block-columns-section {
+  padding-block: 60px;
+  background: #fff;
+
+  .container-wide {
+    max-width: 60rem;
+  }
+
+  @media (width >= 60rem) {
+    .container-wide {
+      padding-inline: 0;
+    }
+  }
+}
+
 .design-system .block-columns-2 {
   @media screen and (width >= 769px) {
     grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
   }
 }
 
-// Long-form section headings match the snapshot's 27px scale.
-.design-system .block-columns h2 {
-  font-size: 1.7rem;
+// Long-form typography: 27px section headings, 19px/25px body copy,
+// snapshot spacing between sections and list items.
+.design-system .block-columns .prose {
+  h2 {
+    margin-top: 60px;
+    margin-bottom: 25px;
+    font-size: 27px;
+    line-height: 35px;
+  }
+
+  h2:first-child {
+    margin-top: 0;
+  }
+
+  p {
+    @include legacy-body-copy;
+  }
+
+  ul {
+    gap: 15px;
+    margin-bottom: 25px;
+  }
+
+  li {
+    font-size: 19px;
+    line-height: 25px;
+  }
+}
+
+// The contents column matches the body copy scale, with the snapshot's
+// compact 10px spacing between entries.
+.design-system .table-of-contents {
+  font-size: 19px;
+
+  a {
+    line-height: 25px;
+  }
+
+  li + li {
+    margin-top: 10px;
+  }
+}
+
+// The trailing action sits a section-gap below the last paragraph,
+// like the legacy form-card footer.
+.design-system .block-columns .link-button {
+  margin-top: 60px;
 }

@@ -6,6 +6,8 @@ permalink: /privacy/
 blocks:
   - type: hero
     content: |
+      <img class="hero-emblem" src="/images/maryland-cta.svg" alt="" width="101" height="75">
+
       # Our Privacy Policy
 
       Read more about how we use, share, store and protect your personal information on MarylandBenefits.org.

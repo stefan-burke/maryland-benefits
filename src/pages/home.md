@@ -15,5 +15,3 @@ blocks:
       - text: Apply for benefits
         href: https://mymdthink.maryland.gov
         variant: primary
-        size: lg
----
