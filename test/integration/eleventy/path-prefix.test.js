@@ -6,7 +6,8 @@ const SITE_URL = "https://deployment.test/project";
 
 const getSite = useSharedSite({
   env: { PATH_PREFIX, SITE_URL },
-  images: ["party.jpg"],
+  // wordmark/cfa-logo-white are site chrome rendered by the fork's includes.
+  images: ["party.jpg", "wordmark.svg", "cfa-logo-white.svg"],
   processImages: true,
   files: [
     {

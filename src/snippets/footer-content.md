@@ -2,4 +2,6 @@
 name: Footer Content
 ---
 
-An example informational site built from the template
+This benefits application is a service built by Code for America in partnership with the state of Maryland, on behalf of the people of Maryland.
+
+[Privacy Policy](/privacy/)

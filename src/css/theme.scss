@@ -1,15 +1,154 @@
-// Default Theme - matches design-system defaults from _variables.scss
+// MarylandBenefits.org theme — mirrors the existing site's visual design
+// (the Honeycrisp "black + #f5f5f5" reskin captured in the content snapshot).
+//
+// Token overrides first, then the small set of component rules the tokens
+// cannot express: the black header bar, the white application card, the
+// black primary button, and the footer's two-column arrangement.
+// Tokens load last in the bundle (see design-system-bundle.scss).
+
 :root {
-  --color-bg: #fafafa;
-  --body-background: #fafafa;
-  --body-background-alt: #f0f1f3;
+  --color-bg: #f5f5f5;
+  --body-background: #f5f5f5;
+  --body-background-alt: #fff;
   --color-card-bg: #fff;
-  --color-text: #1f2937;
-  --color-text-muted: #6b7280;
-  --color-link: #2563eb;
-  --color-link-hover: #1d4ed8;
-  --color-tint: #dbeafe;
-  --color-secondary: #7c3aed;
-  --color-accent: #ebebeb;
-  --color-hover-bg: rgb(0 0 0 / 5%);
+  --color-text: #121111;
+  --color-text-muted: #5f5854;
+  --color-link: #003865;
+  --color-link-hover: #00223d;
+  --color-tint: #e9f6ff;
+  --color-dark-bg: #000;
+  --color-dark-bg-alt: #1a1a1a;
+  --shadow-md: 0 3px 5px rgb(0 0 0 / 15%);
+  --border-radius: 1rem;
+}
+
+// Header: full-width black bar with the MarylandBenefits.org wordmark.
+// The template's nav bar carries no background of its own, so the bar is
+// this theme's addition; with no navigation pages it holds only the logo.
+.design-system nav.site-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: center;
+
+  min-height: 7rem;
+  padding-inline: clamp(1.5rem, 5vw, 3.5rem);
+
+  background: var(--color-dark-bg);
+  box-shadow: none;
+
+  .site-logo {
+    display: inline-block;
+
+    &,
+    img {
+      max-width: min(18rem, 100%);
+    }
+  }
+}
+
+// The application card: white, rounded, softly shadowed, centered.
+.design-system .hero {
+  width: min(100%, 55rem);
+  margin-block: var(--section-padding-y);
+  margin-inline: auto;
+  padding: 6rem 3.5rem;
+  border-radius: var(--border-radius);
+
+  background: var(--color-card-bg);
+  box-shadow: 0 3px 5px rgb(0 0 0 / 15%);
+
+  @media (width <= 40rem) {
+    padding: 2.5rem 1.5rem;
+  }
+}
+
+.hero-emblem {
+  margin-inline: auto;
+}
+
+// The snapshot's landing card uses a much smaller opening heading than the
+// template default; the privacy page keeps the template hero scale, which
+// matches its snapshot's 50px title.
+.design-system.page--home .hero h1 {
+  font-size: 1.7rem;
+}
+
+// Primary action: black button with the snapshot's short radius and the
+// darker shadow edge under it.
+.design-system .btn {
+  border-radius: 5px;
+
+  &--primary {
+    background: #000;
+    box-shadow: 0 2px 0 #333;
+
+    &:hover:not(:disabled) {
+      background: #333;
+      box-shadow: 0 2px 0 #333;
+    }
+  }
+}
+
+// Footer: dark bar, service text and privacy link in a left column, the
+// Code for America wordmark on the right, like the snapshot's footer grid.
+// The <footer> element stays full-width; footer.html wraps the snippet in
+// .footer-content, which centers at the card width.
+.design-system footer {
+  padding-inline: clamp(1.5rem, 5vw, 3.5rem);
+
+  a:not(.btn) {
+    color: #fff;
+  }
+
+  .footer-content {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: var(--space-sm) var(--space-xl);
+    align-items: center;
+
+    width: min(100%, 55rem);
+    margin-inline: auto;
+
+    text-align: left;
+
+    p {
+      grid-column: 1;
+      margin: 0;
+    }
+
+    .footer-logo {
+      grid-column: 2;
+      grid-row: 1 / span 3;
+      align-self: center;
+    }
+
+    img {
+      width: 6.25rem;
+    }
+
+    // On narrow screens the logo stacks under the text column.
+    @media (width <= 40rem) {
+      grid-template-columns: 1fr;
+      justify-items: start;
+
+      .footer-logo {
+        grid-column: 1;
+        grid-row: auto;
+      }
+    }
+  }
+}
+
+// Long-form pages: contents column takes a third, content the rest, from
+// the md breakpoint up; below it the template's own stacking applies.
+.design-system .block-columns-2 {
+  @media screen and (width >= 769px) {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+  }
+}
+
+// Long-form section headings match the snapshot's 27px scale.
+.design-system .block-columns h2 {
+  font-size: 1.7rem;
 }

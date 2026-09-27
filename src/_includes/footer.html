@@ -5,8 +5,15 @@
     </ul>
   {%- endif -%}
   {%- include "footer-socials.html" -%}
-  {%- render_snippet "footer-content" -%}
-  {%- if page.url == "/" and config.homepage_footer_markdown -%}
-    {{ config.homepage_footer_markdown | markdown }}
-  {%- endif -%}
+  <div class="footer-content">
+    {%- render_snippet "footer-content" -%}
+    {%- if page.url == "/" and config.homepage_footer_markdown -%}
+      {{ config.homepage_footer_markdown | markdown }}
+    {%- endif -%}
+    <div class="footer-logo">
+      <a href="https://www.codeforamerica.org">
+        {%- image "images/cfa-logo-white.svg", "Code for America", "276" -%}
+      </a>
+    </div>
+  </div>
 </footer>

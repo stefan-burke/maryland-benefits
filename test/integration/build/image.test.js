@@ -251,6 +251,9 @@ describe("image", () => {
         { src: "src/images/party.jpg", dest: "test-image.jpg" },
         { src: "src/images/party.jpg", dest: "scene.jpg" },
         ...imageFiles(["alpha.jpg", "beta.jpg"]),
+        // Site chrome: the fork's header and footer includes render these.
+        { src: "src/images/wordmark.svg", dest: "wordmark.svg" },
+        { src: "src/images/cfa-logo-white.svg", dest: "cfa-logo-white.svg" },
       ],
       processImages: true,
     });
