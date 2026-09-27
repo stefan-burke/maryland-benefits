@@ -4,7 +4,12 @@
 // jscpd:ignore-end
 
 // Rich text content container. Inherits stack layout (flex-col with gap).
-
+//
+// IMPORTANT: vertical rhythm inside .prose comes from this flex gap. Do not
+// add margin-bottom/margin-top to its children (p, ul, li, headings) — the
+// margin stacks on top of the gap and doubles the spacing. Themes change
+// rhythm by overriding the gap, and may at most add a documented increment
+// on a section boundary whose comment names the gap it includes.
 .design-system {
   .prose {
     @include flex-col($space-md);

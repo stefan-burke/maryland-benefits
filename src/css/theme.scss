@@ -25,9 +25,10 @@
   --font-family-heading: arial, sans-serif;
 }
 
-// The legacy site's body copy: 19px/25px black with 25px paragraph gaps.
+// The legacy site's body copy: 19px/25px black text. Vertical rhythm inside
+// .prose comes from the container's flex gap (25px below), never from
+// margins on the children — see the note in design-system/_prose.scss.
 @mixin legacy-body-copy {
-  margin-bottom: 25px;
   font-size: 19px;
   line-height: 25px;
   color: var(--color-text);
@@ -61,12 +62,14 @@
   }
 }
 
-// Shared hero text: left-aligned, 19px/25px body copy, snapshotted margins.
-// The hero container matches the legacy 960px content column.
+// Shared hero text: left-aligned, 19px/25px body copy in the legacy
+// 960px content column. The hero gap is the legacy paragraph-to-button
+// spacing; .prose children take their rhythm from the prose gap.
 .design-system .hero {
   display: flex;
   flex-direction: column;
-  gap: 35px;
+  gap: 60px;
+
 
   width: min(100%, 60rem);
   margin-inline: auto;
@@ -82,17 +85,11 @@
     }
   }
 
-
   h1 {
-    margin-top: 10px;
-    margin-bottom: 25px;
     font-size: 50px;
   }
-
-  @media (width >= 37.5rem) {
-    padding: 60px 35px;
-  }
 }
+
 
 .design-system .hero .actions {
   align-self: stretch;
@@ -115,7 +112,6 @@
   box-shadow: 0 3px 5px rgb(0 0 0 / 15%);
 
   h1 {
-    margin-top: 0;
     font-size: 27px;
     line-height: 35px;
   }
@@ -124,7 +120,6 @@
     padding: 60px 35px;
   }
 }
-
 
 // Primary action: the legacy button scale — 19px bold, generous padding,
 // 10px radius, and the darker shadow edge under it.
@@ -235,12 +230,15 @@
   }
 }
 
-// Long-form typography: 27px section headings, 19px/25px body copy,
-// snapshot spacing between sections and list items.
+// Long-form typography: 27px section headings, 19px/25px body copy. The
+// paragraph rhythm is the prose gap; the legacy 60px section gap is the
+// only margin, and it is stated as the gap-plus-increment it replaces.
 .design-system .block-columns .prose {
+  gap: 25px;
+
   h2 {
-    margin-top: 60px;
-    margin-bottom: 25px;
+    // 25px prose gap + 35px = the legacy 60px gap before a section heading.
+    margin-top: 35px;
     font-size: 27px;
     line-height: 35px;
   }
@@ -255,7 +253,6 @@
 
   ul {
     gap: 15px;
-    margin-bottom: 25px;
   }
 
   li {
@@ -269,17 +266,19 @@
 .design-system .table-of-contents {
   font-size: 19px;
 
+  ol {
+    gap: 10px;
+  }
+
   a {
     line-height: 25px;
   }
-
-  li + li {
-    margin-top: 10px;
-  }
 }
 
-// The trailing action sits a section-gap below the last paragraph,
-// like the legacy form-card footer.
+// The trailing action sits a section-gap below the content column's
+// 32px flex gap: 32px + 28px = the legacy 60px.
 .design-system .block-columns .link-button {
-  margin-top: 60px;
+  margin-top: 28px;
 }
+
+
