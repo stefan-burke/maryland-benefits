@@ -25,9 +25,8 @@
   --font-family-heading: arial, sans-serif;
 }
 
-// The legacy site's body copy: 19px/25px black text. Vertical rhythm inside
-// .prose comes from the container's flex gap (25px below), never from
-// margins on the children — see the note in design-system/_prose.scss.
+// The legacy site's body copy: 19px/25px black text. The spacing comes from
+// the .prose gap, not from margins — see the note in _prose.scss.
 @mixin legacy-body-copy {
   font-size: 19px;
   line-height: 25px;
@@ -231,8 +230,8 @@
 }
 
 // Long-form typography: 27px section headings, 19px/25px body copy. The
-// paragraph rhythm is the prose gap; the legacy 60px section gap is the
-// only margin, and it is stated as the gap-plus-increment it replaces.
+// prose gap carries the paragraph spacing; the only margin is the extra
+// space before a section heading, and its comment shows the sum.
 .design-system .block-columns .prose {
   gap: 25px;
 
@@ -275,8 +274,7 @@
   }
 }
 
-// The trailing action sits a section-gap below the content column's
-// 32px flex gap: 32px + 28px = the legacy 60px.
+// 32px block-column gap + 28px = the legacy 60px above the trailing button.
 .design-system .block-columns .link-button {
   margin-top: 28px;
 }
